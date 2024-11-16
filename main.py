@@ -44,9 +44,7 @@ class Text:
         if not self.background:
             self.text = self.font.render(self.text, self.anti_aliasing, self.color)
         elif self.background:
-            self.text = self.font.render(
-                self.text, self.anti_aliasing, self.color, self.bg_color
-            )
+            self.text = self.font.render(self.text, self.anti_aliasing, self.color, self.bg_color)
 
         self.text_rect = self.text.get_rect()
 
@@ -93,31 +91,37 @@ def update_rainbow(speed, tup):
     if rainbow[0] == 255 and rainbow[1] < 255 and rainbow[2] == 0:
         # Transition from Red to Yellow (increase Green)
         rainbow[1] += speed
+        rainbow[1] = round(rainbow[1])
         if rainbow[1] > 255:
             rainbow[1] = 255
     elif rainbow[1] == 255 and rainbow[0] > 0 and rainbow[2] == 0:
         # Transition from Yellow to Green (decrease Red)
         rainbow[0] -= speed
+        rainbow[0] = round(rainbow[0])
         if rainbow[0] < 0:
             rainbow[0] = 0
     elif rainbow[1] == 255 and rainbow[2] < 255:
         # Transition from Green to Cyan (increase Blue)
         rainbow[2] += speed
+        rainbow[2] = round(rainbow[2])
         if rainbow[2] > 255:
             rainbow[2] = 255
     elif rainbow[2] == 255 and rainbow[1] > 0:
         # Transition from Cyan to Blue (decrease Green)
         rainbow[1] -= speed
+        rainbow[1] = round(rainbow[1])
         if rainbow[1] < 0:
             rainbow[1] = 0
     elif rainbow[2] == 255 and rainbow[0] < 255:
         # Transition from Blue to Magenta (increase Red)
         rainbow[0] += speed
+        rainbow[0] = round(rainbow[0])
         if rainbow[0] > 255:
             rainbow[0] = 255
     elif rainbow[0] == 255 and rainbow[2] > 0:
         # Transition from Magenta to Red (decrease Blue)
         rainbow[2] -= speed
+        rainbow[2] = round(rainbow[2])
         if rainbow[2] < 0:
             rainbow[2] = 0
 
@@ -297,7 +301,7 @@ def main():
             RAINBOW = update_rainbow(2, RAINBOW)  # Update the rainbow color
             color = RAINBOW  # Set the brush color to the updated rainbow color
 
-        RAINBOW = update_rainbow(2, RAINBOW)
+        RAINBOW = update_rainbow(0.2, RAINBOW)
         draw()
         delta_time = 1 / clock.tick(FPS)
 
